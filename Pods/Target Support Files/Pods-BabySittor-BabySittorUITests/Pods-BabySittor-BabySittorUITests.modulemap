@@ -1,0 +1,6 @@
+framework module Pods_BabySittor_BabySittorUITests {
+  umbrella header "Pods-BabySittor-BabySittorUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

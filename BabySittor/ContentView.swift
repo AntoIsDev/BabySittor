@@ -8,9 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @ObservedObject private var usersFetch = UsersFetchRequest.shared
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+            VStack {
+                Text("Liste des utilisateurs").font(.title)
+                List(usersFetch.users, id: \.uuid) { user in
+                    UserListElementView(user: user)
+                }
+            }.alert(isPresented: $usersFetch.error, content: {
+                Alert(title: Text("Connexion impossible"),
+                      message: Text("Une erreur nous empêche de récupérer la liste des utilisateurs"),
+                      dismissButton: .default(Text("OK")))
+            })
     }
 }
 

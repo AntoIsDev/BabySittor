@@ -1,0 +1,4 @@
+disabled_rules:
+- force_cast
+excluded: # paths to ignore during linting
+- Pods

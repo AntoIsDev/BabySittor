@@ -1,0 +1,6 @@
+framework module Pods_BabySittor {
+  umbrella header "Pods-BabySittor-umbrella.h"
+
+  export *
+  module * { export * }
+}
