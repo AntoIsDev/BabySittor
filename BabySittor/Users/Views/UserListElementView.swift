@@ -17,14 +17,11 @@ struct UserListElementView: View {
             AsyncImage(url: URL(string: user.defaultPictureUrl))
                 .frame(minWidth: 50, maxWidth: 50, minHeight: 50, maxHeight: 50)
                 .clipShape(Circle())
-            Spacer()
-            Text(user.firstname).frame(minWidth: 70, maxWidth: 70).font(.system(size: 12)).lineLimit(1)
-            Spacer()
-            Text(user.lastname).frame(minWidth: 70, maxWidth: 70).font(.system(size: 12)).lineLimit(1)
+            Text(user.firstname+" "+user.lastname).font(.system(size: 12)).lineLimit(1)
             Spacer()
             HStack {
                 Text(String(format: "%.2f", user.averageReviewScore ?? 0)).font(.system(size: 12))
-                Image(systemName: "star.circle")
+                Image(systemName: "star.fill")
             }
         }
 

@@ -13,9 +13,20 @@ struct ContentView: View {
 
     var body: some View {
             VStack {
-                Text("Liste des utilisateurs").font(.title)
-                List(usersFetch.users, id: \.uuid) { user in
-                    UserListElementView(user: user)
+                if usersFetch.users.isEmpty {
+                    Button(action: {
+                        usersFetch.fetchUsers()
+                    }, label: {
+                        Text("Rafraîchir")
+                        Image(systemName: "arrow.clockwise")
+                    })
+                } else {
+                    Text("Liste des utilisateurs").font(.title)
+                    List(usersFetch.users, id: \.uuid) { user in
+                        UserListElementView(user: user)
+                    }.refreshable {
+                        usersFetch.fetchUsers()
+                    }
                 }
             }.alert(isPresented: $usersFetch.error, content: {
                 Alert(title: Text("Connexion impossible"),

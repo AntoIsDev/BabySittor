@@ -11,8 +11,10 @@ import SwiftyJSON
 
 class UsersFetchRequest: ObservableObject {
 
+    let urlBabysittor = "https://preprod-api.bbst.eu/test_tech"
     static let shared = UsersFetchRequest()
-    let reachabilityManager = Alamofire.NetworkReachabilityManager(host: "preprod-api.bbst.eu")
+
+    private let reachabilityManager = Alamofire.NetworkReachabilityManager(host: "preprod-api.bbst.eu")
 
     @Published var users: [User] = []
     @Published var error: Bool = false
@@ -24,7 +26,7 @@ class UsersFetchRequest: ObservableObject {
 
     }
 
-    func startNetworkReachabilityObserver() {
+    private func startNetworkReachabilityObserver() { // Listener for network availability
 
         reachabilityManager?.startListening { status in
             switch status {
@@ -39,21 +41,21 @@ class UsersFetchRequest: ObservableObject {
 
     }
 
-    func errorHandler(error: Bool) {
+    private func errorHandler(error: Bool) {
         if error {
             self.error = true
-            self.users = []
+            self.users = [] // Invalidate data if network goes down
         } else {
             self.error = false
-            fetchUsers()
+            fetchUsers() // Try to fetch data if network is back
         }
 
     }
 
     func fetchUsers() {
 
-        AF.request("https://preprod-api.bbst.eu/test_tech").responseString { [weak self] response in
-            guard let value = response.value else {
+        AF.request(urlBabysittor).responseString { [weak self] response in
+            guard let value = response.value else { // If response doesn't contain data
                 self?.errorHandler(error: true)
                 return
             }
